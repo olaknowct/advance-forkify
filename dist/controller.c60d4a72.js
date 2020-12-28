@@ -493,9 +493,9 @@ const timeout = function (s) {
 const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
-    if (!id) return;
+    if (!id) return; // imports new instance
 
-    _recipeView.default.renderSpinner(); // loading recipe
+    _recipeView.default.renderSpinner(); // Load recipe and configure state
 
 
     await model.loadRecipe(id);
@@ -5855,6 +5855,7 @@ var _generateMarkup = new WeakSet();
 
 var _generateMarkupIngredients = new WeakSet();
 
+//npm package used to fraction
 class RecipeView {
   constructor() {
     _generateMarkupIngredients.add(this);

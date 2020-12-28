@@ -1,7 +1,8 @@
-import icons from 'url:../../img/icons.svg'; //parcel
-import { Fraction } from 'fractional';
+import icons from 'url:../../img/icons.svg'; //parcel does parcing
+import { Fraction } from 'fractional'; //npm package used to fraction
 
 class RecipeView {
+  // private class fields
   #parentElement = document.querySelector('.recipe');
   #data;
 
