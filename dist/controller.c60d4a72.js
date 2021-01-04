@@ -493,7 +493,7 @@ const controlRecipes = async function () {
 
     _recipeView.default.render(model.state.recipe);
   } catch (err) {
-    alert(err);
+    _recipeView.default.renderError();
   }
 };
 
@@ -5064,7 +5064,7 @@ const loadRecipe = async function (id) {
       ingredients: recipe.ingredients
     };
   } catch (error) {
-    console.error(`${error} error temp error handling`);
+    throw error;
   }
 };
 
@@ -5876,8 +5876,6 @@ var _fractional = require("fractional");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 function _classPrivateFieldGet(receiver, privateMap) { var descriptor = privateMap.get(receiver); if (!descriptor) { throw new TypeError("attempted to get private field on non-instance"); } if (descriptor.get) { return descriptor.get.call(receiver); } return descriptor.value; }
 
 function _classPrivateMethodGet(receiver, privateSet, fn) { if (!privateSet.has(receiver)) { throw new TypeError("attempted to get private field on non-instance"); } return fn; }
@@ -5887,6 +5885,10 @@ function _classPrivateFieldSet(receiver, privateMap, value) { var descriptor = p
 var _parentElement = new WeakMap();
 
 var _data = new WeakMap();
+
+var _errorMessage = new WeakMap();
+
+var _message = new WeakMap();
 
 var _clear = new WeakSet();
 
@@ -5913,17 +5915,14 @@ class RecipeView {
       value: void 0
     });
 
-    _defineProperty(this, "renderSpinner", function () {
-      const markup = `
-        <div class="spinner">
-          <svg>
-            <use href="${_icons.default}#icon-loader"></use>
-          </svg>
-        </div> 
-    `;
-      _classPrivateFieldGet(this, _parentElement).innerHTML = '';
+    _errorMessage.set(this, {
+      writable: true,
+      value: 'we could not  find that recipe. please try another one'
+    });
 
-      _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', markup);
+    _message.set(this, {
+      writable: true,
+      value: ''
     });
   }
 
@@ -5931,6 +5930,53 @@ class RecipeView {
     _classPrivateFieldSet(this, _data, data);
 
     const markup = _classPrivateMethodGet(this, _generateMarkup, _generateMarkup2).call(this);
+
+    _classPrivateMethodGet(this, _clear, _clear2).call(this);
+
+    _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderSpinner() {
+    const markup = `
+        <div class="spinner">
+          <svg>
+            <use href="${_icons.default}#icon-loader"></use>
+          </svg>
+        </div> 
+    `;
+    _classPrivateFieldGet(this, _parentElement).innerHTML = '';
+
+    _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderError(message = _classPrivateFieldGet(this, _errorMessage)) {
+    const markup = `
+      <div class="error">
+        <div>
+          <svg>
+            <use href="${_icons.default}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div> 
+    `;
+
+    _classPrivateMethodGet(this, _clear, _clear2).call(this);
+
+    _classPrivateFieldGet(this, _parentElement).insertAdjacentHTML('afterbegin', markup);
+  }
+
+  renderMessage(message = _classPrivateFieldGet(this, _message)) {
+    const markup = `
+      <div class="message">
+        <div>
+          <svg>
+            <use href="${_icons.default}#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div> 
+    `;
 
     _classPrivateMethodGet(this, _clear, _clear2).call(this);
 
