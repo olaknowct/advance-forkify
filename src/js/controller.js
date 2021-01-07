@@ -1,6 +1,7 @@
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searhView from './views/searchView.js';
+import resultsView from './views/resultsView.js';
 
 import 'core-js/stable'; // polyfill everything
 import 'regenerator-runtime/runtime'; // polyfil async await
@@ -26,12 +27,17 @@ const controlRecipes = async function () {
 
 const controlSearchResults = async function () {
   try {
+    resultsView.renderSpinner();
+    //  get search query
     const query = searhView.getQuery();
-
+    console.log(query);
     if (!query) return;
+    //  Load search results
     await model.loadSearchResults(query);
-    searchView.clearInput();
-    console.log(model.state.search.results);
+    console.log('tada');
+
+    // render results
+    resultsView.render(model.state.search.results);
   } catch (error) {}
 };
 
