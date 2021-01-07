@@ -6,8 +6,10 @@ import resultsView from './views/resultsView.js';
 import 'core-js/stable'; // polyfill everything
 import 'regenerator-runtime/runtime'; // polyfil async await
 
-///////////////////////////////////////
-
+// parcel
+if (module.hot) {
+  module.hot.accept;
+}
 const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
@@ -30,11 +32,10 @@ const controlSearchResults = async function () {
     resultsView.renderSpinner();
     //  get search query
     const query = searhView.getQuery();
-    console.log(query);
+
     if (!query) return;
     //  Load search results
     await model.loadSearchResults(query);
-    console.log('tada');
 
     // render results
     resultsView.render(model.state.search.results);

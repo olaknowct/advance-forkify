@@ -482,7 +482,11 @@ function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { default: obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj.default = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 // polyfil async await
-///////////////////////////////////////
+// parcel
+if (module.hot) {
+  module.hot.accept;
+}
+
 const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
@@ -506,11 +510,9 @@ const controlSearchResults = async function () {
 
     const query = _searchView.default.getQuery();
 
-    console.log(query);
     if (!query) return; //  Load search results
 
-    await model.loadSearchResults(query);
-    console.log('tada'); // render results
+    await model.loadSearchResults(query); // render results
 
     _resultsView.default.render(model.state.search.results);
   } catch (error) {}
@@ -5981,9 +5983,7 @@ class RecipeView extends _View.default {
       </div>
 
       <div class="recipe__user-generated">
-        <svg>
-          <use href="${_icons.default}#icon-user"></use>
-        </svg>
+
       </div>
       <button class="btn--round">
         <svg class="">
@@ -6542,6 +6542,7 @@ class View {
   }
 
   render(data) {
+    if (!data || Array.isArray(data) && data.length == 0) return this.renderError();
     this._data = data;
 
     const markup = this._generateMarkup();
@@ -6666,6 +6667,10 @@ class ResultsView extends _View.default {
     super(...args);
 
     _defineProperty(this, "_parentElement", document.querySelector('.results'));
+
+    _defineProperty(this, "_errorMessage", 'No Recipe Found for your query, please try again');
+
+    _defineProperty(this, "_message", '');
   }
 
   _generateMarkup() {
