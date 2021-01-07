@@ -2,9 +2,11 @@ import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searhView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
+import PaginationView from './views/resultsView.js';
 
 import 'core-js/stable'; // polyfill everything
 import 'regenerator-runtime/runtime'; // polyfil async await
+import paginationView from './views/paginationView.js';
 
 // parcel
 if (module.hot) {
@@ -40,12 +42,22 @@ const controlSearchResults = async function () {
     // render results
     // resultsView.render(model.state.search.results);
     resultsView.render(model.getSearchResultsPage());
+
+    // render initial pagination btn
+    paginationView.render(model.state.search);
   } catch (error) {}
+};
+
+// Render new results and pagination
+const controlPagination = function (goToPage) {
+  resultsView.render(model.getSearchResultsPage(goToPage));
+  paginationView.render(model.state.search);
 };
 
 const init = function () {
   recipeView.addHandlerRender(controlRecipes);
   searhView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 };
 
 init();
