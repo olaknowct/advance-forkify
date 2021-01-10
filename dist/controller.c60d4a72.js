@@ -494,7 +494,10 @@ const controlRecipes = async function () {
     const id = window.location.hash.slice(1);
     if (!id) return; // imports new instance
 
-    _recipeView.default.renderSpinner(); // Load recipe and configure state
+    _recipeView.default.renderSpinner(); // update results view to mark selected search results
+
+
+    _resultsView.default.update(model.getSearchResultsPage); // Load recipe and configure state
 
 
     await model.loadRecipe(id);
@@ -6612,7 +6615,6 @@ class View {
   }
 
   update(data) {
-    if (!data || Array.isArray(data) && data.length == 0) return this.renderError();
     this._data = data;
 
     const newMarkup = this._generateMarkup(); // string to real dom node objects conversion | virtual dom that lives in the memory
@@ -6761,9 +6763,10 @@ class ResultsView extends _View.default {
   }
 
   _generateMarkupPreview(result) {
+    const id = window.location.hash.slice(1);
     return `
     <li class="preview">
-        <a class="preview__link" href="#${result.id}">
+        <a class="preview__link ${result.id === id ? 'preview_link--active' : ''}" href="#${result.id}">
             <figure class="preview__fig">
             <img src="${result.image}" alt="${result.title}" />
             </figure>

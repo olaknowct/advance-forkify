@@ -15,11 +15,14 @@ if (module.hot) {
 const controlRecipes = async function () {
   try {
     const id = window.location.hash.slice(1);
+
     if (!id) return;
 
     // imports new instance
     recipeView.renderSpinner();
 
+    // update results view to mark selected search results
+    resultsView.update(model.getSearchResultsPage);
     // Load recipe and configure state
     await model.loadRecipe(id);
 
