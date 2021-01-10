@@ -32,7 +32,6 @@ const controlRecipes = async function () {
 
     recipeView.render(model.state.recipe);
   } catch (err) {
-    console.log(err);
     recipeView.renderError();
   }
 };
@@ -53,7 +52,10 @@ const controlSearchResults = async function () {
 
     // render initial pagination btn
     paginationView.render(model.state.search);
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    resultsView.renderError();
+  }
 };
 
 // Render new results and pagination
