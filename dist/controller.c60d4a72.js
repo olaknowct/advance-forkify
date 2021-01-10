@@ -497,13 +497,15 @@ const controlRecipes = async function () {
     _recipeView.default.renderSpinner(); // update results view to mark selected search results
 
 
-    _resultsView.default.update(model.getSearchResultsPage); // Load recipe and configure state
+    _resultsView.default.update(model.getSearchResultsPage()); // Load recipe and configure state
 
 
     await model.loadRecipe(id);
 
     _recipeView.default.render(model.state.recipe);
   } catch (err) {
+    console.log(err);
+
     _recipeView.default.renderError();
   }
 };
@@ -542,10 +544,18 @@ const controlServings = function (newServings) {
   _recipeView.default.update(model.state.recipe);
 };
 
+const controlAddBookmark = function () {
+  model.addBookmark(model.state.recipe);
+
+  _recipeView.default.update(model.state.recipe);
+};
+
 const init = function () {
   _recipeView.default.addHandlerRender(controlRecipes);
 
   _recipeView.default.addHandlerUpdateServings(controlServings);
+
+  _recipeView.default.addHandlerAddBookmark(controlAddBookmark);
 
   _searchView.default.addHandlerSearch(controlSearchResults);
 
@@ -5085,7 +5095,7 @@ $({ target: 'URL', proto: true, enumerable: true }, {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateServings = exports.getSearchResultsPage = exports.loadSearchResults = exports.loadRecipe = exports.state = void 0;
+exports.addBookmark = exports.updateServings = exports.getSearchResultsPage = exports.loadSearchResults = exports.loadRecipe = exports.state = void 0;
 
 var _regeneratorRuntime = require("regenerator-runtime");
 
@@ -5100,7 +5110,8 @@ const state = {
     results: [],
     page: 1,
     resultsPerPage: _config.RES_PER_PAGE
-  }
+  },
+  bookmarks: []
 };
 exports.state = state;
 
@@ -5165,6 +5176,15 @@ const updateServings = function (newServings) {
 };
 
 exports.updateServings = updateServings;
+
+const addBookmark = function (recipe) {
+  // add bookmark
+  state.bookmarks.push(recipe); // mark current recipe as bookmark
+
+  if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+};
+
+exports.addBookmark = addBookmark;
 },{"regenerator-runtime":"e155e0d3930b156f86c48e8d05522b16","./config":"09212d541c5c40ff2bd93475a904f8de","./helpers":"0e8dcd8a4e1c61cf18f78e1c2563655d"}],"e155e0d3930b156f86c48e8d05522b16":[function(require,module,exports) {
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -6006,6 +6026,14 @@ class RecipeView extends _View.default {
     });
   }
 
+  addHandlerAddBookmark(handler) {
+    this._parentElement.addEventListener('click', function (e) {
+      const btn = e.target.closest('.btn--bookmark');
+      if (!btn) return;
+      handler();
+    });
+  }
+
   _generateMarkup() {
     return `
     <figure class="recipe__fig">
@@ -6047,9 +6075,9 @@ class RecipeView extends _View.default {
       <div class="recipe__user-generated">
 
       </div>
-      <button class="btn--round">
+      <button class="btn--round btn--bookmark">
         <svg class="">
-          <use href="${_icons.default}#icon-bookmark-fill"></use>
+          <use href="${_icons.default}#icon-bookmark${this._data.bookmarked ? '-fill' : ''}"></use>
         </svg>
       </button>
     </div>
