@@ -534,8 +534,9 @@ const controlPagination = function (goToPage) {
 const controlServings = function (newServings) {
   // update the recipe servings in the state
   model.updateServings(newServings); // update recipe view
+  // recipeView.render(model.state.recipe);
 
-  _recipeView.default.render(model.state.recipe);
+  _recipeView.default.update(model.state.recipe);
 };
 
 const init = function () {
@@ -6608,6 +6609,30 @@ class View {
     this._clear();
 
     this._parentElement.insertAdjacentHTML('afterbegin', markup);
+  }
+
+  update(data) {
+    if (!data || Array.isArray(data) && data.length == 0) return this.renderError();
+    this._data = data;
+
+    const newMarkup = this._generateMarkup(); // string to real dom node objects conversion | virtual dom that lives in the memory
+
+
+    const newDom = document.createRange().createContextualFragment(newMarkup);
+    const newElements = Array.from(newDom.querySelectorAll('*'));
+    const curElements = Array.from(this._parentElement.querySelectorAll('*'));
+    newElements.forEach((newEl, i) => {
+      const curEl = curElements[i]; // node value is nul if not element
+
+      if (!newEl.isEqualNode(curEl) && newEl.firstChild?.nodeValue.trim() !== '') {
+        curEl.textContent = newEl.textContent;
+      } // update changed attributes
+
+
+      if (!newEl.isEqualNode(curEl)) {
+        Array.from(newEl.attributes).forEach(attr => curEl.setAttribute(attr.name, attr.value));
+      }
+    });
   }
 
   _clear() {
