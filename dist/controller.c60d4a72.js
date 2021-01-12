@@ -6052,7 +6052,7 @@ try {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.KEY = exports.RES_PER_PAGE = exports.TIMEOUT_SEC = exports.API_URL = void 0;
+exports.MODAL_CLOSE_SEC = exports.KEY = exports.RES_PER_PAGE = exports.TIMEOUT_SEC = exports.API_URL = void 0;
 const API_URL = 'https://forkify-api.herokuapp.com/api/v2/recipes/';
 exports.API_URL = API_URL;
 const TIMEOUT_SEC = 10;
@@ -6061,6 +6061,8 @@ const RES_PER_PAGE = 10;
 exports.RES_PER_PAGE = RES_PER_PAGE;
 const KEY = '2f566881-d6eb-47c0-811b-a19dc4ead2bc';
 exports.KEY = KEY;
+const MODAL_CLOSE_SEC = 2.5;
+exports.MODAL_CLOSE_SEC = MODAL_CLOSE_SEC;
 },{}],"0e8dcd8a4e1c61cf18f78e1c2563655d":[function(require,module,exports) {
 "use strict";
 
