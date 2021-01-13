@@ -9,15 +9,15 @@ Link: https://advance-forkify-chris.netlify.app/
 ## How it works
 1. Search for any food that you most likely want to cook.
 2. Search results gives you a plenty of choices  
-3. Choose any from the search results for it to display its recipe and how to cook details
-4. Recipe are provide but for you to get its details how to cook step by step details, source/ref are provided.
+3. Choose any from the search results for it to display its recipe and "how to cook" details
+4. Recipe are provided but for you to get its "how to cook" step by step details, source/ref are provided as well.
 5. Bookmarking of a recipe gives you ability to easily navigate thru without having to search.
-6. It Gives you ability to add and save your own recipe. This details are exclusive for you only. 
+6. Capable of to adding or saving your own recipe. This details are exclusive. 
 
 ## About
 
 - The project is used for educational purposes only, its part of the lesson i took from Jonas.
-- As part of my learnings and would benefit me, I've listed down here **(See below section)** all the PSEUDO Code, SUMMARY and Feautures from this Project
+- As part of my learnings and would benefit me, I've listed down here **(See below section)** all the Pseudocode, Summary and Feautures from this Project
 - The project contains overall concept we've practiced right from the start of course 
 - Significant concept applied from this project are the following
   - 4 pillars of OOP
@@ -29,7 +29,7 @@ Link: https://advance-forkify-chris.netlify.app/
     - Common methods/properties are place to Parent Class, in this way child Class inherit it.
   - MVC
     - Model 
-      - Handles the business logic, states
+      - Handles the business logic, states, CRUD
     - View 
       - Handles all presentation logic by means of rendering dynamic html, is also responsible for registering/listening of events
     - Controller  
@@ -38,7 +38,6 @@ Link: https://advance-forkify-chris.netlify.app/
       - Uses abstraction
    - Async Await
    - publisher-subcriber pattern
-   
 
 
 ### Features
@@ -130,14 +129,14 @@ Link: https://advance-forkify-chris.netlify.app/
 	
 			
 
-Summary
+### Summary
 - It uses an API to get List of food recipe. 
 - With the help of the Asynchrounous Javascript, you dont need to load the page everytime an http request happens 
 - An Asynchrounous Javascript is way of rendering all http request to Browser background API , it does not happen on your appication.
 - MVC pattern and OOP Architecture Implementation helps the codebase maintainable and readable. therefore adopting new changes and updates can be easily implemented
-- Using ES6 Classes makes inheritance easier to implement. Underhood it simply sugar coats the prototypal inheritance.
+- Using ES6 Classes makes inheritance easier to implement. under the hood, it simply sugar coats the prototypal inheritance.
 
 
-## API Used
+### API Used
 	- https://forkify-api.herokuapp.com/v2
 
