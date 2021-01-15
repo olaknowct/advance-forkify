@@ -137,6 +137,19 @@ Link: https://advance-forkify-chris.netlify.app/
 - Using ES6 Classes makes inheritance easier to implement. under the hood, it simply sugar coats the prototypal inheritance.
 
 
+### Dependencies
+- parcel
+  - takes all of your files and dependencies, transforms them, and merges them together into a smaller set of output files that can be used to run your code.
+  - Its main purpose is to make our app work from different browser (as we know some still uses older version of browser and etc)
+  - Uses babel to transpile code from ES6 (arrown fn, nclasses, const, spread operator and etc) back to ES5 syntax
+
+- CoreJS/Stable
+  - new features such as promises instance, array methods can't be transpilled by babel (tho babel use polyfil before but they decided and suggested to use different polyfil library), it needs to be polyfil
+  - does recreate and making it available
+- Regenerator/runtime
+  - Polyfiling Async function
+  
+
 ### API Used
 	- https://forkify-api.herokuapp.com/v2
 
